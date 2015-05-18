@@ -27,7 +27,7 @@ int main(int argc,char *argv[]){
     addfd(epfd,sock,true);
     addfd(epfd,pipe_fd[0],true);
     bool isClientwork=true;
-    char mesage[BUF_SIZE];
+    char message[BUF_SIZE];
     int pid = fork();
     if(pid<0){
         perror("fork error");
@@ -43,7 +43,7 @@ int main(int argc,char *argv[]){
                 isClientwork = false;
             }
             else {
-                if( write(pipe_fd[1],message,strlen(message)=1)<0){
+                if( write(pipe_fd[1],message,strlen(message)+1)<0){
                     perror("fork error");
                     exit(-1);
                 }
@@ -53,7 +53,7 @@ int main(int argc,char *argv[]){
     else {
         close(pipe_fd[1]);
         while(isClientwork){
-            int epoll_evnets_count = epoll_wait(epfd , events,2,-1);
+            int epoll_events_count = epoll_wait(epfd , events,2,-1);
             for(int i=0;i<epoll_events_count;i++){
                 bzero(&message,BUF_SIZE);
                 if (events[i].data.fd == sock){
@@ -63,7 +63,7 @@ int main(int argc,char *argv[]){
                         close(sock);
                         isClientwork = false;
                     }
-                    else printf("%d\n",message);
+                    else printf("%s\n",message);
 
                 }
                 else {
@@ -80,7 +80,7 @@ int main(int argc,char *argv[]){
     }
     if(pid){
         close(pipe_fd[0]);
-        colse(sock);
+        close(sock);
     }
     else{
         close(pipe_fd[1]);

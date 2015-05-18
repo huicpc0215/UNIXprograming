@@ -1,10 +1,10 @@
 #include "utility.h"
 
 int main(int argc,char *argv[]){
-    struct socket_in serverAddr;
+    struct sockaddr_in serverAddr;
     serverAddr.sin_family = PF_INET;
     serverAddr.sin_port = htons(SERVER_PORT);
-    serverAdr.sin_addr.s_addr=inet_addr(SERVER_IP);
+    serverAddr.sin_addr.s_addr=inet_addr(SERVER_IP);
 
     int listener = socket(PF_INET,SOCK_STREAM,0);
     if( listener < 0 ) {
@@ -36,13 +36,13 @@ int main(int argc,char *argv[]){
             perror("epoll failure");
             break;
         }
-        printf("epoll_events_count = %d\n",epoll_evnets_count);
+        printf("epoll_events_count = %d\n",epoll_events_count);
         for(int i=0;i<epoll_events_count;i++){
             int sockfd = events[i].data.fd;
             if(sockfd == listener){
                 struct sockaddr_in client_address;
                 socklen_t client_addrLength = sizeof(struct sockaddr_in);
-                int clientfd = accept(listener, (struct sockaddr * ) &clientt_address, &client_addrLength);
+                int clientfd = accept(listener, (struct sockaddr * ) &client_address, &client_addrLength);
                 printf("client connection from : %s : %d (IP: port), clientfd = %d\n",
                         inet_ntoa(client_address.sin_addr),
                         ntohs(client_address.sin_port),
@@ -50,7 +50,7 @@ int main(int argc,char *argv[]){
                 addfd(epfd, clientfd,true);
                 clients_list.push_back(clientfd);
                 printf("Add new clientfd = %d to epoll\n",clientfd);
-                printf("Noew there are %d client in the chatt room\n",(int)clients_list,size());
+                printf("Noew there are %d client in the chatt room\n",(int)clients_list.size());
                 printf("Welcom message\n");
                 char message[BUF_SIZE];
                 bzero(message,BUF_SIZE);

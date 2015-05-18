@@ -17,12 +17,15 @@
 
 using namespace std;
 
-// clients_list 
+// clients_list
 // save all clients's socket
 list <int> clients_list;
 
 // server ip
 #define SERVER_IP  "127.0.0.1"
+
+// server port
+#define SERVER_PORT 8888
 
 // epoll size
 #define EPOLL_SIZE 5000
@@ -36,7 +39,7 @@ list <int> clients_list;
 #define CAUTION "There is only one persion in the  room !"
 
 int setnonblocking(int sockfd){
-    fcntl(sockfd, F_SETFL, fcnttl(sockfd, F_GETFD,  0)| 0_NONBLOCK);
+    fcntl(sockfd, F_SETFL, fcntl(sockfd, F_GETFD,  0) | O_NONBLOCK );
     return 0;
 }
 
@@ -69,11 +72,11 @@ int sendBroadcastmessage(int clientfd){
             return len;
         }
        sprintf(message , SERVER_MESSAGE,clientfd ,buf);
-       list<itn>::iterator it;
+       list<int>::iterator it;
        for(it=clients_list.begin();it!=clients_list.end();it++){
            if(*it!=clientfd){
                if(send(*it,message,BUF_SIZE,0)<0){
-                   perror("error);
+                   perror("error:");
                    exit(-1);
                }
            }
