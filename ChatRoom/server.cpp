@@ -57,7 +57,7 @@ int main(int argc,char *argv[]){
                 sprintf(message,SERVER_WELCOME,clientfd);
                 int ret = send(clientfd, message , BUF_SIZE,0);
                 if(ret <0 ) {
-                    perror("sed error");
+                    perror("send error");
                     exit(-1);
                 }
             }

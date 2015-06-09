@@ -43,7 +43,7 @@ int setnonblocking(int sockfd){
     return 0;
 }
 
-void addfd(int epollfd,int fd ,bool enable_et){
+void addfd(int epollfd,int fd,bool enable_et){
     struct epoll_event ev;
     ev.data.fd = fd;
     ev.events = EPOLLIN;
@@ -67,20 +67,20 @@ int sendBroadcastmessage(int clientfd){
         printf("ClientID = %d closed.\n now there are %d client in the char romm\n",clientfd,(int)clients_list.size());
     }
     else {
-        if( clients_list.size()==1){
+        if( clients_list.size()==1 ){
             send( clientfd, CAUTION,strlen(CAUTION),0);
             return len;
         }
-       sprintf(message , SERVER_MESSAGE,clientfd ,buf);
-       list<int>::iterator it;
-       for(it=clients_list.begin();it!=clients_list.end();it++){
-           if(*it!=clientfd){
-               if(send(*it,message,BUF_SIZE,0)<0){
-                   perror("error:");
-                   exit(-1);
-               }
-           }
-       }
+        sprintf(message , SERVER_MESSAGE,clientfd ,buf);
+        list<int>::iterator it;
+        for(it=clients_list.begin();it!=clients_list.end();it++){
+            if(*it!=clientfd){
+                if(send(*it,message,BUF_SIZE,0)<0){
+                    perror("error:");
+                    exit(-1);
+                }
+            }
+        }
     }
     return len;
 }
