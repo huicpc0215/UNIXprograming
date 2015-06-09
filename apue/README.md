@@ -1,6 +1,7 @@
-#apue(Advanced programing in the Unix Enviorment)
+#APUE(Advanced programing in the Unix Enviorment)
 
-Learn it by doing it. step by step
+Learn it by doing it. 
+And step by step.
 
 ##contaning:
 
