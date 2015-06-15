@@ -5,6 +5,7 @@
 #define	_APUE_H
 
 #define _POSIX_C_SOURCE 200809L
+#define	PATH_MAX_GUESS	1024
 
 #if defined(SOLARIS)		/* Solaris 10 */
 #define _XOPEN_SOURCE 600
@@ -16,6 +17,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <sys/termios.h>	/* for winsize */
+#include <sys/sysmacros.h>
 #if defined(MACOS) || !defined(TIOCGWINSZ)
 #include <sys/ioctl.h>
 #endif
